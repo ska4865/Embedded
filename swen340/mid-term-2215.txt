@@ -1,0 +1,257 @@
+SWEN 340 Mid-Term Exam
+Term 2215
+
+Instructions:
+-------------
+
+This exam has 6 questions for 48 total points. 
+Points for each question are listed with each question.
+Closed Notes, No Calculators - 1 hour 15 minutes
+
+Edit this file.
+Keep all of the question text.
+Submit your edited text file by adding it to your 340 repo and pushing it.
+No PDFs --  No Pictures -- ONLY text file submissions.
+
+NOTE -- Show each step that you take to get the answer. Do not skip steps!
+        Use sentences whenever needed to explain your answer.
+        Answers (even if correct) without intermediate steps will get a zero.
+
+TIPS: Remember that bit 0 is the right most (and least significant bit)
+      and that bit 7 (in an 8 bit number) is the left most (and most significant bit).
+
+QUESTIONS:
+----------
+
+(8) 1. Study the code below and predict output of each Printf() statement:
+
+	int main( int arg_count, char *arg_list[] )
+	{
+		int result = 0 ;		// default to success
+	
+		unsigned char q1 = 0b10100000;
+		signed char q2 = -10;
+		signed char q3;
+	
+		// Question 1a
+		printf( "\n q1 value in Hexadecimal 0x%x\n", q1); 
+	
+		// Question 1b
+		printf("\n q2 value in Hexadecimal 0x%x\n", q2);
+	
+		// Question 1c
+		q3 = q1 + q2;
+		printf("\n q3 value in decimal %d\n", q3); 
+	
+		// Question 1d
+		q3 = q1 | q2;
+		printf("\n q3 value in Hexadecimal 0x%x\n", q3);
+
+		return result ;
+	}
+
+	Question 1a -- Convert unsigned char q1 (Binary) into Hex 
+	
+	Steps: 0b1010 = 10 = 0xa
+		   0b0000 = 0 = 0x0
+
+
+	answer: 0xA0
+
+
+	Question 1b -- Convert signed char q2 into Hex 
+	Hint: Convert to Binary and then Hexadecimal
+	
+	Steps: 0b11110110 -> 1111 = 0xF 0110 = 0x6
+
+
+	answer: 0xF6
+
+	Question 1c -- Binary Arithmatic: q3 = q1 + q2
+	Note: use 2s complement to convert signed binary into decimal
+
+	Steps: 0b10100000 + 0b11110110
+
+
+	answer: 0b10010110
+
+
+	Question 1d -- Bitwise Operation: q3 = q1 | q2;
+
+	Steps:  10100000 | 11110110 -> 11110110
+
+
+
+	answer: 0b11110110
+
+
+(4) 2. For this question you are required to use one or more of these operators: ~ | << >> & =
+       You want to divide an unsigned 8 bit integer that contains 0x58 by 4.
+
+
+       2a. Describe how you would divide 0x58 by 4 only by using one or more of the required operator(s):
+		I would move the bits to the left 2 times. 0x58 >> 2.
+
+       2b. What is the resulting value in hexadecimal?
+	   0x16
+	
+         
+
+(4) 3. For this question you are required to use one or more of these operators: ~ | << >> & =
+       An unsigned 8 bit integer contains an unknown number (e.g uint8_t unknown_value).
+       You want to make sure that bits 0, 3, 6 and 7 bits are set (forced to 1) but you do not want
+       to change the remaining bit values (bits 1, 2, 4, and 5).
+
+       Describe how you would do this: unknown_value | 11001001. I would or together the unknown_value and
+	   the binary number 11001001 effectively changing the desired bits 0, 3, 6, and 7 by only having 1s in
+	   those places because when or operating if at lest 1 one is present it'll change to 1 and zeros won't 
+	   change anything 
+
+
+	
+(8) 4. Would the code below compile and run successfully? If not, please explain why and how you may fix it.
+
+	// Calculate Square of a number "a" and store its answer as "b"
+	void calc_square (int a, int *b)
+	{
+		*b = a * a;
+	}
+	
+	int main( int arg_count, char *arg_list[] )
+	{
+		int result = 0 ;		// default to success		
+		int x, y;
+		x = 2;
+		
+		calc_square ( x, y );
+		printf("\n Square of %d is %d", x, y);
+		
+		calc_square ( 2, x );
+		printf("\n Square of %d is %d", 2, x);
+		
+		return result ;
+	}
+
+	4a. Will the code compile without error?
+	no because calc_square takes in an int pointer as its second perameter but when it is called 
+	neither time is the variable a pointer. 
+
+	4b. Will the code Run without error? If not, Why? and How would you fix it?	
+	no the compile error would most likely stop you from having conflicting types. You could 
+	fix it by making x and y int pointers and when assigning the values dereferance it.
+		    
+
+
+	
+
+
+(16) 5. The following code does not do what the comments says it does. Identify four of the many
+       programming errors and explain what you would do to fix these errors.
+       Only identify actual errors -- ignore coding style.
+       An error is something that either will not compile or will not work correctly.
+       The comments including the two comments before line 1 specify what the code should do.
+       USE the line numbers to reference specific lines of the program.
+
+       // return 0 if sum is correct.
+       // return 1 if sum is not correct.
+ 1     void main( int argc, char *argv[] )
+ 2     {
+ 3       uint8_t upper_limit = 303 ;
+ 4       uint8_t i = 0;
+ 5       uint8_t sum = 0 ;
+ 6       int result ;
+ 7
+ 8       // add the values from 301 to 305 (expected answer 1515)
+ 9       while ( i > upper_limit )
+10       {
+11         result += i ;
+12         i++ ;
+13       }
+14       // return a 1 if the sum is 1515, return 0 otherwise
+15       if ( sum = 1515 )
+16         result = 0 ;
+17       else
+18         result = 1 ;
+19
+20       return result ;
+21     }
+
+       
+	Describe error 1 and include line number(s): 
+	line 9 logic is wrong. not only does i not start at 301 but because its i > upper_limit
+	this would never run because i isn't being changed outside of the loop.
+
+	
+
+       	Describe how you would correct this error:
+		   i < upper_limit
+
+
+    Describe error 2 and include line number(s):
+	line 9 i starts at zero and not 301 and the upper limit is 303 not 305 so if the logic 
+	worked correctly it would count from 0 to 302 instead.
+
+
+       Describe how you would correct this error:
+	   set i to equal 301 and make upper upper_limit 306
+
+
+       Describe error 3 and include line number(s):
+	   line 15 is assignment not a conditional. It is not checking if the sum is 1515
+
+
+
+       Describe how you would correct this error:
+	   make it sum == 1515
+
+
+       Describe error 4 and include line number(s):
+	   line 15 sum is never changed so even if it was a real conditional it wouldn't be checking
+	   properly
+
+
+       Describe how you would correct this error:
+	   change line 11 result += i to sum += i
+
+	
+
+(8) 6. Use this register description or the copy from the Mid-Term Exam folder:
+           http://www.se.rit.edu/~swen-340/resources/swen-340-registers-for-exam.pdf
+
+       For both of the following questions if you are unsure of exactly how
+       to write the code provide a detailed description of what to do for
+       partial credit (assuming your description is correct).
+
+       Create one typedef'd struct that includes all five of these registers.
+       Provide that definition here:
+
+	   typedef struct {
+		   int CTRL;
+		   int SR;
+		   int SET1;
+		   int SET2;
+		   int CURR;
+	   } register;
+
+
+
+       Using your typedef'd struct create one initialized pointer to this set of
+       registers. You must initialize the pointer to point to the correct
+       memory address as specified in the swen-340-registers-for-exam.pdf.
+	   register* reg_p;
+
+	   reg_p -> CTRL = 0xE000C040;
+	   reg_p -> SR = 0xE000C044;
+	   reg_p -> SET1 = 0xE000C048;
+	   reg_p -> SET2 = 0xE000C04C;
+	   reg_p -> CURR = 0xE000C050;
+
+
+
+
+
+
+
+
+
+
